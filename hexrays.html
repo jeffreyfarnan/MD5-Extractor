@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="icon" href="assets/img/favicon.ico">
+<title>H3hive</title>
+<!-- Bootstrap core CSS -->
+<link href="assets/css/bootstrap.min.css" rel="stylesheet">
+<!-- Fonts -->
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Righteous%7CMerriweather:300,300i,400,400i,700,700i" rel="stylesheet">
+<!-- Custom styles for this template -->
+<link href="assets/css/mediumish.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- Begin Nav
+================================================== -->
+<nav class="navbar navbar-toggleable-md navbar-light bg-white fixed-top mediumnavigation">
+<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+<span class="navbar-toggler-icon"></span>
+</button>
+<div class="container">
+	<!-- Begin Logo -->
+	<a class="navbar-brand" href="index.html">
+	<img src="assets/img/logo.png" alt="logo">
+	</a>
+	<!-- End Logo -->
+	<div class="collapse navbar-collapse" id="navbarsExampleDefault">
+		<!-- Begin Menu -->
+		<ul class="navbar-nav ml-auto">
+			<li class="nav-item active">
+			<a class="nav-link" href="index.html">Home<span class="sr-only">(current)</span></a>
+			</li>
+			<li class="nav-item">
+			<a class="nav-link" href="threats.html">Threats</a>
+			</li>
+                        <li class="nav-item">
+			<a class="nav-link" href="reports.html">Reports</a>
+			</li>
+                        <li class="nav-item">
+			<a class="nav-link" href="presentations.html">Presentations</a>
+			</li>
+                        <li class="nav-item">
+			<a class="nav-link" href="https://yaraify.abuse.ch/user/45347/" target="_blank">Yara Rules</a>
+			</li>
+			<li class="nav-item">
+			<a class="nav-link" href="about.html">About</a>
+			</li>
+		</ul>
+		<!-- End Menu -->
+		
+	</div>
+</div>
+</nav>
+<!-- End Nav
+================================================== -->
+
+<!-- Begin Article
+================================================== -->
+<div class="container">
+	<div class="row">
+
+		<!-- Begin Fixed Left Share -->
+		<div class="col-md-2 col-xs-12">
+			<div class="share">
+			
+			</div>
+		</div>
+		<!-- End Fixed Left Share -->
+
+		<!-- Begin Post -->
+		<div class="col-md-8 col-md-offset-2 col-xs-12">
+			<div class="mainheading">
+
+							<!-- Begin Top Meta -->
+				<div class="row post-top-meta">
+					<div class="col-md-2">
+						<a href="about.html"><img class="author-thumb-2" src="images/me.jpg"></a>
+					</div>
+					<div class="col-md-10">
+						<a class="link-dark" href="about.html">jfarnan</a> &nbsp<span class="dot"></span>
+						
+						<span class="post-date">Oct 27, 2022</span>&nbsp<span class="dot"></span>&nbsp<span class="post-read">1 min read</span>
+					</div>
+				</div>
+				<!-- End Top Menta -->
+
+				<h1 class="posttitle">Introduction to the Hex-Rays decompiler</h1>
+
+			</div>
+
+			<div class="article-post">
+			<p>
+			IDA Pro is PE disassembler application. A disassembler is used to translate machine code into a readable format called assembly language. IDA Pro can also also include the Hex-rays decompiler which can translate the binary code into pseudocode of each function making it more understandable
+				</p>		
+
+                         <p>
+			The advantages of this decompiler is it requires less time to read the the code, the program logic is more obvious and you don't have to learn assembly language. The code is generated on the fly making it fast enough to analyze 99% of functions within a couple of seconds.
+				</p>	
+			
+
+                         <p>
+			The decompiler supports the x86, x64, ARM32, ARM6, PowerPC processors and runs on Windows, Linux and  Mac OS X.
+				</p>	
+
+
+                         <p>
+			Below is a sample of a simple  program which was written in the C programming language and compiled to create a executable file. The program prints out numbers from an array using a loop. I'm going  to decompile this program using the Hex-Rays decompiler.
+				</p>	
+			</div>
+
+
+			<!--Image -->
+			<img class="featured-image img-fluid" src="hexrays/code.jpg" alt="">
+			
+
+			<!-- Begin Post Content -->
+			<div class="article-post">
+				<p>
+					After running the program we have the following output;
+				</p>
+
+                         <!--Image -->
+			<img class="featured-image img-fluid" src="hexrays/output.jpg" alt="">
+
+
+				<p>
+					After decompiling the exe using the Hex-Rays decompiler we have the following output:
+				</p>
+
+                        <!--Image -->
+			<img class="featured-image img-fluid" src="hexrays/hexrays.jpg" alt="">
+				<p>
+					Although the code is very basic it is easy to understand.
+				</p>
+			</div>
+			<!-- End Post Content -->
+
+
+
+		</div>
+		<!-- End Post -->
+
+	</div>
+</div>
+<!-- End Article
+================================================== -->
+
+<div class="hideshare"></div>
+
+<!-- Begin Related
+================================================== -->
+<div class="graybg">
+	<div class="container"><h4>Recent Posts</h4><br>
+		<div class="row listrecent listrelated">
+
+			<!-- begin post -->
+			<div class="col-md-4">
+				<div class="card">
+					<a href="patching.html">
+					<img class="img-fluid img-thumb" src="assets/img/cover/patching.jpg" alt="">
+					</a>
+					<div class="card-block">
+						<h2 class="card-title"><a href="patching.html">Patching Executables - An Introduction</a></h2>
+						
+					</div>
+				</div>
+			</div>
+			<!-- end post -->
+
+			<!-- begin post -->
+			<div class="col-md-4">
+				<div class="card">
+					<a href="inline.html">
+					<img class="img-fluid img-thumb" src="assets/img/cover/inline.jpg" alt="">
+					</a>
+					<div class="card-block">
+						<h2 class="card-title"><a href="inline.html">Inline Assembley - An Introduction</a></h2>
+						
+					</div>
+				</div>
+			</div>
+			<!-- end post -->
+
+			<!-- begin post -->
+			<div class="col-md-4">
+				<div class="card">
+					<a href="orbit.html">
+					<img class="img-fluid img-thumb" src="assets/img/cover/orbit.jpg" alt="">
+					</a>
+					<div class="card-block">
+						<h2 class="card-title"><a href="orbit.html">Look at OrBit Malware affecting Linux machines</a></h2>
+					
+					</div>
+				</div>
+			</div>
+			<!-- end post -->
+
+		</div>
+	</div>
+</div>
+<!-- End Related Posts
+================================================== -->
+
+
+<!-- Begin Footer
+================================================== -->
+<div class="container">
+	<div class="footer">
+		<p class="pull-left">
+			 Copyright &copy; 2024 H3hive
+		</p>
+	
+		<div class="clearfix">
+		</div>
+	</div>
+</div>
+<!-- End Footer
+================================================== -->
+
+
+
+
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="assets/js/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/ie10-viewport-bug-workaround.js"></script>
+<script src="assets/js/mediumish.js"></script>
+</body>
+</html>

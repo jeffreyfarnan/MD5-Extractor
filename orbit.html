@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="icon" href="assets/img/favicon.ico">
+<title>H3hive</title>
+<!-- Bootstrap core CSS -->
+<link href="assets/css/bootstrap.min.css" rel="stylesheet">
+<!-- Fonts -->
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Righteous%7CMerriweather:300,300i,400,400i,700,700i" rel="stylesheet">
+<!-- Custom styles for this template -->
+<link href="assets/css/mediumish.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- Begin Nav
+================================================== -->
+<nav class="navbar navbar-toggleable-md navbar-light bg-white fixed-top mediumnavigation">
+<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+<span class="navbar-toggler-icon"></span>
+</button>
+<div class="container">
+	<!-- Begin Logo -->
+	<a class="navbar-brand" href="index.html">
+	<img src="assets/img/logo.png" alt="logo">
+	</a>
+	<!-- End Logo -->
+	<div class="collapse navbar-collapse" id="navbarsExampleDefault">
+		<!-- Begin Menu -->
+		<ul class="navbar-nav ml-auto">
+			<li class="nav-item active">
+			<a class="nav-link" href="index.html">Home<span class="sr-only">(current)</span></a>
+			</li>
+			<li class="nav-item">
+			<a class="nav-link" href="threats.html">Threats</a>
+			</li>
+                        <li class="nav-item">
+			<a class="nav-link" href="reports.html">Reports</a>
+			</li>
+                        <li class="nav-item">
+			<a class="nav-link" href="presentations.html">Presentations</a>
+			</li>
+                        <li class="nav-item">
+			<a class="nav-link" href="https://yaraify.abuse.ch/user/45347/" target="_blank">Yara Rules</a>
+			</li>
+			<li class="nav-item">
+			<a class="nav-link" href="about.html">About</a>
+			</li>
+		</ul>
+		<!-- End Menu -->
+		
+	</div>
+</div>
+</nav>
+<!-- End Nav
+================================================== -->
+
+<!-- Begin Article
+================================================== -->
+<div class="container">
+	<div class="row">
+
+		<!-- Begin Fixed Left Share -->
+		<div class="col-md-2 col-xs-12">
+			<div class="share">
+				
+			</div>
+		</div>
+		<!-- End Fixed Left Share -->
+
+		<!-- Begin Post -->
+		<div class="col-md-8 col-md-offset-2 col-xs-12">
+			<div class="mainheading">
+
+				<!-- Begin Top Meta -->
+				<div class="row post-top-meta">
+					<div class="col-md-2">
+						<a href="about.html"><img class="author-thumb-2" src="images/me.jpg"></a>
+					</div>
+					<div class="col-md-10">
+						<a class="link-dark" href="about.html">jfarnan</a> &nbsp<span class="dot"></span>
+						
+						<span class="post-date">Aug 8, 2022</span>&nbsp<span class="dot"></span>&nbsp<span class="post-read">3 min read</span>
+					</div>
+				</div>
+				<!-- End Top Menta -->
+
+				<h1 class="posttitle">Look at OrBit Malware affecting Linux machines</h1>
+
+			</div>
+
+			<div class="article-post">
+			<p>
+			A recently identified Linux malware is being used to secretly access backdoor Linux computers, steal information, and infect all running processes. To remain persistent on the infected systems, the malware employs cutting-edge evasion strategies and hooks crucial functions. OrBit collects passwords, logs TTY commands, and enables operators to gain remote access capabilities via SSH.
+				</p>		
+			</div>
+
+
+			<!-- Begin Post Content -->
+			<div class="article-post">
+				<p>
+				Backdoor: A backdoor is a vulnerability in a Linux machine or software that allows otherwise unauthorized users to gain access to the system.
+  				<br>
+                                Spyware: Spyware is a form of malware that hides on your Linux machine, monitors your activity, and steals sensitive information such as bank details and passwords.
+				</p>
+
+				<b>
+					Malware Histroy
+				</b>
+
+				<p>
+				Linux is a popular operating system for servers and cloud infrastructure, which makes it a tempting target for cyber criminals.
+				<br><br> Nowadays, malware that is designed to infect Linux computers has been steadily expanding and becoming more sophisticated.
+				</p>
+				
+				<p> 
+				OrBit is a new malware that surfaced recently but uses new capabilities that make it almost impossible to detect. Dubbed OrBit by the security researchers who first spotted it. The malware’s name comes from the filenames it uses to temporarily store the output of executed commands ("<b>/tmp/.orbit</b>").
+				<br><br>
+				OrBit is the fourth Linux malware to have come to light in a short span of three months, having similar capabilities and functions with other recently discovered Linux malware. Symbiote malware which is also designed to infect all of the running processes on the compromised machines. A Linux backdoor called BPfDoor also uses hooking functionality to monitor and manipulate network traffic hiding their communication channels.
+				</p>
+				
+
+				<b>
+				Malware Description
+				</b>
+
+				<p>
+				OrBit is a new and growing trend of malware attack geared towards the Linux operating system.It can be either installed with persistence capabilities or as a volatile implant. This malware has many capabilities and functions:<br>
+					• This malware implements advanced evasion techniques.<br>
+					• Gains persistence on the machine by hooking key functions.<br>
+					• Provides the threat actors with remote access capabilities over SSH (Secure Socket Shell).<br>
+					• Harvest credentials and logs TTY (teletypewriter) commands.<br>
+					• It infects running processes on the machine, including new ones.<br>
+				</p>
+
+				<p>
+				<b>Goal:</b> The ultimate goal of this malware is to steal information. It does this by hooking read and write functions to capture data that’s’ being written by the executed processes on the machine.
+				</p>
+				
+				<p>
+				<b>Installation:</b> OrBit is known to have different ways to gain access to the targeted system. It receives command line arguments and based on them it extracts the payload to one of the locations. Using these command line arguments the installation path can be swapped and the content of the payload can be updated or entirely uninstalled. Orbit gets installed via anELF dropper which installs the payload but also prepares the environment for the malware’s execution. 
+				</p>
+
+				<p>
+				<b>Execution:</b> Once the malware is installed it will infect all of the running processes, including new processes running on the machine. Other threats hijack shared libraries by modifying the environment variable _ LD_PRELOAD, this malware uses 2 different ways to load the malicious library. The first way is by adding the shared object to the configuration file that is used by the loader. The second way is by patching the binary of the loader itself so it will load the malicious shared object.
+				</p>
+
+				<p>
+				<b>Stealth:</b> Orbit uses XOR encrypted strings and steals passwords. The malware stores the stolen data on the device itself, which means that security tools don’t detect the leakage to the hacker’s server. Stores the stolen information in specific files on the machine.
+				</p>
+				<p>
+				<b>Persistence:</b> OrBit relies on a barrage of methods which allow it to function without alerting its presence and establish persistence. It can hook different libraries to avoid detection, maintain persistence by infection new processes, control process behaviour and mask network activity. This makes it difficult to remove from infected machines. After gaining persistence, the malware provides the attackers with an SSH backdoor to the system, allowing them to gain remote access, steal credentials, and log TTY commands. Since Linux is the most commonly used OS for servers, the malware poses a significant risk to enterprises.
+				</p>
+
+	
+
+
+			</div>
+			<!-- End Post Content -->
+
+
+
+		</div>
+		<!-- End Post -->
+
+	</div>
+</div>
+<!-- End Article
+================================================== -->
+
+<div class="hideshare"></div>
+
+<!-- Begin Related
+================================================== -->
+<div class="graybg">
+	<div class="container"><h4>Recent Posts</h4><br>
+		<div class="row listrecent listrelated">
+
+			<!-- begin post -->
+			<div class="col-md-4">
+				<div class="card">
+					<a href="alerts.html">
+					<img class="img-fluid img-thumb" src="assets/img/cover/alert.jpg" alt="">
+					</a>
+					<div class="card-block">
+						<h2 class="card-title"><a href="alerts.html">Reversing a Fake Alert with Ghidra</a></h2>
+						
+					</div>
+				</div>
+			</div>
+			<!-- end post -->
+
+			<!-- begin post -->
+			<div class="col-md-4">
+				<div class="card">
+					<a href="snowman.html">
+					<img class="img-fluid img-thumb" src="assets/img/cover/snowman.jpg" alt="">
+					</a>
+					<div class="card-block">
+						<h2 class="card-title"><a href="snowman.html">Reversing C++ Code with the Snowman Decompiler</a></h2>
+						
+					</div>
+				</div>
+			</div>
+			<!-- end post -->
+
+			<!-- begin post -->
+			<div class="col-md-4">
+				<div class="card">
+					<a href="patching.html">
+					<img class="img-fluid img-thumb" src="assets/img/cover/patching.jpg" alt="">
+					</a>
+					<div class="card-block">
+						<h2 class="card-title"><a href="patching.html">Patching Executables - An Introduction </a></h2>
+						
+					</div>
+				</div>
+			</div>
+			<!-- end post -->
+
+		</div>
+	</div>
+</div>
+<!-- End Related Posts
+================================================== -->
+
+
+<!-- Begin Footer
+================================================== -->
+<div class="container">
+	<div class="footer">
+		<p class="pull-left">
+			 Copyright &copy; 2024 H3hive
+		</p>
+	
+		<div class="clearfix">
+		</div>
+	</div>
+</div>
+<!-- End Footer
+================================================== -->
+
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="assets/js/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/ie10-viewport-bug-workaround.js"></script>
+<script src="assets/js/mediumish.js"></script>
+</body>
+</html>
