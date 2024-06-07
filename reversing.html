@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="icon" href="assets/img/favicon.ico">
+<title>H3hive</title>
+<!-- Bootstrap core CSS -->
+<link href="assets/css/bootstrap.min.css" rel="stylesheet">
+<!-- Fonts -->
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Righteous%7CMerriweather:300,300i,400,400i,700,700i" rel="stylesheet">
+<!-- Custom styles for this template -->
+<link href="assets/css/mediumish.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- Begin Nav
+================================================== -->
+<nav class="navbar navbar-toggleable-md navbar-light bg-white fixed-top mediumnavigation">
+<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+<span class="navbar-toggler-icon"></span>
+</button>
+<div class="container">
+	<!-- Begin Logo -->
+	<a class="navbar-brand" href="index.html">
+	<img src="assets/img/logo.png" alt="logo">
+	</a>
+	<!-- End Logo -->
+	<div class="collapse navbar-collapse" id="navbarsExampleDefault">
+		<!-- Begin Menu -->
+		<ul class="navbar-nav ml-auto">
+			<li class="nav-item active">
+			<a class="nav-link" href="index.html">Home<span class="sr-only">(current)</span></a>
+			</li>
+			<li class="nav-item">
+			<a class="nav-link" href="threats.html">Threats</a>
+			</li>
+                        <li class="nav-item">
+			<a class="nav-link" href="reports.html">Reports</a>
+			</li>
+                        <li class="nav-item">
+			<a class="nav-link" href="presentations.html">Presentations</a>
+			</li>
+                        <li class="nav-item">
+			<a class="nav-link" href="https://yaraify.abuse.ch/user/45347/" target="_blank">Yara Rules</a>
+			</li>
+			<li class="nav-item">
+			<a class="nav-link" href="about.html">About</a>
+			</li>
+		</ul>
+		<!-- End Menu -->
+		
+	</div>
+</div>
+</nav>
+<!-- End Nav
+================================================== -->
+
+<!-- Begin Article
+================================================== -->
+<div class="container">
+	<div class="row">
+
+		<!-- Begin Fixed Left Share -->
+		<div class="col-md-2 col-xs-12">
+			<div class="share">
+				
+			</div>
+		</div>
+		<!-- End Fixed Left Share -->
+
+		<!-- Begin Post -->
+		<div class="col-md-8 col-md-offset-2 col-xs-12">
+			<div class="mainheading">
+
+				<!-- Begin Top Meta -->
+				<div class="row post-top-meta">
+					<div class="col-md-2">
+						<a href="about.html"><img class="author-thumb-2" src="images/me.jpg"></a>
+					</div>
+					<div class="col-md-10">
+						<a class="link-dark" href="about.html">jfarnan</a> &nbsp<span class="dot"></span>
+						
+						<span class="post-date">Mar 3, 2022</span>&nbsp<span class="dot"></span>&nbsp<span class="post-read">3 min read</span>
+					</div>
+				</div>
+				<!-- End Top Menta -->
+
+				<h1 class="posttitle">Reversing a simple C++ program</h1>
+
+			</div>
+
+			<div class="article-post">
+			<p>
+			I am going to create C++ program, which will print out two simple strings. The object of this post is to show how I reverse engineer C++ code explaining how objects are created, used and then deleted. I am going to use the Relyze Desktop Application to reverse engineer this program.
+			</p>		
+			
+			<p>
+			This post is linked to another of my blog post where I debug this same source code step by step, while also explaining what is happening with each executed instruction, you can find the link here.
+			</p>
+
+			<p>
+			When a C++ program is compiled all class information is lost, class methods are converted to functions, function names are mangled variable names are converted to default names. It can be very confusing and hard to understand, that’s where the Relyze Desktop Application is very easy to use, and the way the assemble code is shown is more understandable.
+			</p>
+
+
+			<b>
+			Relyze Desktop
+			</b>
+
+			<p>
+			I’m using Relyze Desktop to reverse engineer this program. It loads PE and ELF binaries, allowing you to navigate a binaries structure and discover how it is composed. Visualize the data and enrich the analysis with symbols. The decompiler converts low level native code into a high level pseudo code, allowing you to quickly understand program behaviour. Relyze Desktop allows you to convert and change many of the variables and object names, which can help in understanding the programs structure. I import my executable file into Relyze Desktop and search for the main method.
+			</p>
+
+
+			<b>
+			The main method
+			</b>
+			
+			<p>
+			We go the main method, and convert the name and functions to make them more understandable. I convert the assembly code into a more pseudo C++ programming code, allowing me to understand behaviour. I constructed the object creation into what it would look like in the C++ code in the comment section.
+			</p>
+
+
+		</div>
+
+
+
+			<!-- Image -->
+			<img class="featured-image img-fluid" src="reversing/main.jpg" alt="">
+			
+
+			<!-- Begin Post Content -->
+			<div class="article-post">
+				<p>
+					I can clearly see the “this” object is created and used to create a new operator. A constructor is created called simpleCatC 
+				</p>
+				<b>
+					SimpleCatC Constructor
+				</b>
+				<p>
+					The simplecat function is the first function to be called by default, it has the same name of the Class. When on object (instance of a class) is created, it initializes values to the data members of the object. When looking at this function in assembly, it looks to be a simple function which declares age to be equal to two, we can simplify this by converting to pseudo code. 
+				</p>
+			
+						<!-- Image -->
+						<img class="featured-image img-fluid" src="reversing/simpleCatC.jpg" alt="">
+				<p>
+					At the end of this function the value of 2 is passed into eax. If we go back to the main method to continue with the rest of the code.
+				</p>
+					<!-- Image -->
+					<img class="featured-image img-fluid" src="reversing/main2.jpg" alt="">
+				<b>
+					SimpleCat_GetAge function
+				</b>
+
+				<p>
+					The simpleCat_GetAge function simply returns the value passed to it. In the assembly ecx holds the objects value, in this case its and integer, passed into a local variable called age. The value is passed into eax, returning that value when the function is called.
+				</p>
+						<!-- Image -->
+						<img class="featured-image img-fluid" src="reversing/SimpleCat_GetAge.jpg" alt="">
+				<p>
+					We exit out of this function and back into main where we see print instructions to print out the first line of text to screen.
+				</p>
+                                         <!-- Image -->
+					<img class="featured-image img-fluid" src="reversing/main3.jpg" alt="">
+				<p>
+					Eax is holding the value of 2, which is eventually moved into Ecx and printed to screen. When this first line is displayed we move on to the rest of the code.
+				</p>
+				 	 <!-- Image -->
+					<img class="featured-image img-fluid" src="reversing/main4.jpg" alt="">
+				<p>
+					The next function we enter is SimpleCat_SetAge, we can see this pointer is set to 5 making it an argument for the function.
+				</p>
+
+				<b>
+					SimpleCat_SetAge  function
+				</b>
+
+				<p>
+					This function takes an argument and simply returns that argument into eax.
+				</p>
+						<!-- Image -->
+						<img class="featured-image img-fluid" src="reversing/SimpleCat_setAge.jpg" alt="">
+				<p>
+					We enter the main code again, where we enter similar code as before, the SimpleCat_GetAge function and print functions which will print out the second line of text, the only difference is that the age of Frisky is now five.
+				</p>
+
+				<b>
+					SimpleCat Deconstrutor
+				</b>
+
+				<p>
+					Nearing the end of the program, the object is checked to see if it still holds a value, if it doesn’t the program is exited, if it does the Deconstructor is called. The Deconstructor is the last function to be called, it’s used to destroy an object. If an object is created using new which allocates memory on the heap, the deconstructor is used to delete and free up memory.
+				</p>
+						<!-- Image -->
+						<img class="featured-image img-fluid" src="reversing/deconstructor.jpg" alt="">
+				<p>
+					The end of the program, is used to exit out of the program.
+				</p>
+				
+			
+					<!-- Image -->
+						<img class="featured-image img-fluid" src="reversing/exit.jpg" alt="">
+				
+
+		
+
+
+
+			</div>
+			<!-- End Post Content -->
+
+	
+
+		</div>
+		<!-- End Post -->
+
+	</div>
+</div>
+<!-- End Article
+================================================== -->
+
+<div class="hideshare"></div>
+
+<!-- Begin Related
+================================================== -->
+<div class="graybg">
+	<div class="container"><h4>Recent Posts</h4><br>
+		<div class="row listrecent listrelated">
+
+			<!-- begin post -->
+			<div class="col-md-4">
+				<div class="card">
+					<a href="ccleaner.html">
+					<img class="img-fluid img-thumb" src="assets/img/cover/ccleaner.jpg" alt="">
+					</a>
+					<div class="card-block">
+						<h2 class="card-title"><a href="ccleaner.html">CCleaner Breach Analysis and impact</a></h2>
+						
+					</div>
+				</div>
+			</div>
+			<!-- end post -->
+
+			<!-- begin post -->
+			<div class="col-md-4">
+				<div class="card">
+					<a href="overflow.html">
+					<img class="img-fluid img-thumb" src="assets/img/cover/overflow.jpg" alt="">
+					</a>
+					<div class="card-block">
+						<h2 class="card-title"><a href="overflow.html">Analysis of how a Buffer Overflow is created</a></h2>
+						
+					</div>
+				</div>
+			</div>
+			<!-- end post -->
+
+			<!-- begin post -->
+			<div class="col-md-4">
+				<div class="card">
+					<a href="unpacking.html">
+					<img class="img-fluid img-thumb" src="assets/img/cover/unpacking.jpg" alt="">
+					</a>
+					<div class="card-block">
+						<h2 class="card-title"><a href="unpacking.html">Manually Unpacking UPX - Packed Malware</a></h2>
+						
+					</div>
+				</div>
+			</div>
+			<!-- end post -->
+
+		</div>
+	</div>
+</div>
+<!-- End Related Posts
+================================================== -->
+
+
+
+
+
+<!-- Begin Footer
+================================================== -->
+<div class="container">
+	<div class="footer">
+		<p class="pull-left">
+			 Copyright &copy; 2024 H3hive
+		</p>
+	
+		<div class="clearfix">
+		</div>
+	</div>
+</div>
+<!-- End Footer
+================================================== -->
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="assets/js/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/ie10-viewport-bug-workaround.js"></script>
+<script src="assets/js/mediumish.js"></script>
+</body>
+</html>
