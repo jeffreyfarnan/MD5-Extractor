@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="icon" href="assets/img/favicon.ico">
+<title>H3hive</title>
+<!-- Bootstrap core CSS -->
+<link href="assets/css/bootstrap.min.css" rel="stylesheet">
+<!-- Fonts -->
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Righteous%7CMerriweather:300,300i,400,400i,700,700i" rel="stylesheet">
+<!-- Custom styles for this template -->
+<link href="assets/css/mediumish.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- Begin Nav
+================================================== -->
+<nav class="navbar navbar-toggleable-md navbar-light bg-white fixed-top mediumnavigation">
+<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+<span class="navbar-toggler-icon"></span>
+</button>
+<div class="container">
+	<!-- Begin Logo -->
+	<a class="navbar-brand" href="index.html">
+	<img src="assets/img/logo.png" alt="logo">
+	</a>
+	<!-- End Logo -->
+	<div class="collapse navbar-collapse" id="navbarsExampleDefault">
+		<!-- Begin Menu -->
+		<ul class="navbar-nav ml-auto">
+			<li class="nav-item active">
+			<a class="nav-link" href="index.html">Home<span class="sr-only">(current)</span></a>
+			</li>
+			<li class="nav-item">
+			<a class="nav-link" href="threats.html">Threats</a>
+			</li>
+                        <li class="nav-item">
+			<a class="nav-link" href="reports.html">Reports</a>
+			</li>
+                        <li class="nav-item">
+			<a class="nav-link" href="presentations.html">Presentations</a>
+			</li>
+                        <li class="nav-item">
+			<a class="nav-link" href="https://yaraify.abuse.ch/user/45347/" target="_blank">Yara Rules</a>
+			</li>
+			<li class="nav-item">
+			<a class="nav-link" href="about.html">About</a>
+			</li>
+		</ul>
+		<!-- End Menu -->
+		
+	</div>
+</div>
+</nav>
+<!-- End Nav
+================================================== -->
+
+<!-- Begin Article
+================================================== -->
+<div class="container">
+	<div class="row">
+
+		<!-- Begin Fixed Left Share -->
+		<div class="col-md-2 col-xs-12">
+			<div class="share">
+				
+			</div>
+		</div>
+		<!-- End Fixed Left Share -->
+
+		<!-- Begin Post -->
+		<div class="col-md-8 col-md-offset-2 col-xs-12">
+			<div class="mainheading">
+
+				<!-- Begin Top Meta -->
+				<div class="row post-top-meta">
+					<div class="col-md-2">
+						<a href="about.html"><img class="author-thumb-2" src="images/me.jpg"></a>
+					</div>
+					<div class="col-md-10">
+						<a class="link-dark" href="about.html">jfarnan</a> &nbsp<span class="dot"></span>
+						
+						<span class="post-date">Oct 17, 2022 </span>&nbsp<span class="dot"></span>&nbsp<span class="post-read">1 min read</span>
+					</div>
+				</div>
+				<!-- End Top Menta -->
+
+				<h1 class="posttitle">Reversing a Fake Alert with Ghidra</h1>
+
+			</div>
+
+			<div class="article-post">
+			<p>
+			This blog post is a tutorial in how to reverse a fake alert. This alert keeps popping up on screen every minute with the message “<b>Damage to your C drive</b>”. This file is not malicious but can be annoying. I’m using Ghidra to reverse this file.
+				</p>	
+
+
+			<b>
+			StartAddress Function
+			</b>
+
+			<p>
+			I open this exe file in IDA Pro and look at the three main functions. I quickly determine this file creates a thread which creates another thread. We will start
+
+			analyzing the Startaddress function, this seems to do little more than product a Messagebox displaying “<b>Damage to your C drive</b>”.
+			</p>		
+
+	
+			</div>
+
+
+
+			<!-- Image -->
+			<img class="featured-image img-fluid" src="alerts/ida1.jpg" alt="">
+		
+
+			<!-- Begin Post Content -->
+			<div class="article-post">
+				<p>
+					In Ghidra I reverse this function making it more understandable.
+				</p>
+
+						
+					<!-- Image -->
+					<img class="featured-image img-fluid" src="alerts/ghidra1.jpg" alt="">
+
+
+				<b>
+					CreateThread Function
+				</b>
+				<p>
+					The next function we look at is the createThread function.
+				</p>
+				
+				<!-- Image -->
+				<img class="featured-image img-fluid" src="alerts/ida2.jpg" alt="">
+
+				<p>
+					Looking at this function in Ghidra we can understand it more clearly.
+				</p>
+			
+
+					<!-- Image -->
+					<img class="featured-image img-fluid" src="alerts/ghidra2.jpg" alt="">
+				
+				<p>
+					This function is a loop that creates a thread every minute. This thread activates the StartAddress function which will produce the messagebox. We can also see a parameter for the title of the messagebox which is set by the sprintf function. This parameter is the format string “ALERT: %d”, where %d is replaced with a counter
+
+					that increments every time the messagebox is displayed.
+				</p>
+
+				<b>
+					AnotherThread Function
+				</b>
+
+				<p>
+					The last function creates another thread to activate the first thread.
+				</p>
+
+					<!-- Image -->
+					<img class="featured-image img-fluid" src="alerts/ida3.jpg" alt="">
+
+					<!-- Image -->
+					<img class="featured-image img-fluid" src="alerts/ghidra3.jpg" alt="">
+
+			</div>
+			<!-- End Post Content -->
+
+
+
+		</div>
+		<!-- End Post -->
+
+	</div>
+</div>
+<!-- End Article
+================================================== -->
+
+<div class="hideshare"></div>
+
+<!-- Begin Related
+================================================== -->
+<div class="graybg">
+
+	<div class="container"><h4>Recent Posts</h4><br>
+	<div class="row listrecent listrelated">
+
+
+			<!-- begin post -->
+			<div class="col-md-4">
+				<div class="card">
+					<a href="caddywiper.html">
+					<img class="img-fluid img-thumb" src="assets/img/cover/wiper.jpg" alt="">
+					</a>
+					<div class="card-block">
+						<h2 class="card-title"><a href="caddywiper.html">CaddyWiper Malware Analysis and how it damages systems</a></h2>
+						
+					</div>
+				</div>
+			</div>
+			<!-- end post -->
+
+			<!-- begin post -->
+			<div class="col-md-4">
+				<div class="card">
+					<a href="downloader.html">
+					<img class="img-fluid img-thumb" src="assets/img/cover/downloader.jpg" alt="">
+					</a>
+					<div class="card-block">
+						<h2 class="card-title"><a href="downloader.html">Reverse a C++ basic downloader</a></h2>
+						
+					</div>
+				</div>
+			</div>
+			<!-- end post -->
+
+			<!-- begin post -->
+			<div class="col-md-4">
+				<div class="card">
+					<a href="snowman.html">
+					<img class="img-fluid img-thumb" src="assets/img/cover/snowman.jpg" alt="">
+					</a>
+					<div class="card-block">
+						<h2 class="card-title"><a href="snowman.html">Reversing C++ Code with the Snowman Decompiler</a></h2>
+						
+					</div>
+				</div>
+			</div>
+			<!-- end post -->
+
+		</div>
+	</div>
+</div>
+<!-- End Related Posts
+================================================== -->
+
+
+<!-- Begin Footer
+================================================== -->
+<div class="container">
+	<div class="footer">
+		<p class="pull-left">
+			 Copyright &copy; 2024 H3hive
+		</p>
+	
+		<div class="clearfix">
+		</div>
+	</div>
+</div>
+<!-- End Footer
+================================================== -->
+
+
+
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="assets/js/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/ie10-viewport-bug-workaround.js"></script>
+<script src="assets/js/mediumish.js"></script>
+</body>
+</html>

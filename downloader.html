@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="icon" href="assets/img/favicon.ico">
+<title>H3hive</title>
+<!-- Bootstrap core CSS -->
+<link href="assets/css/bootstrap.min.css" rel="stylesheet">
+<!-- Fonts -->
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Righteous%7CMerriweather:300,300i,400,400i,700,700i" rel="stylesheet">
+<!-- Custom styles for this template -->
+<link href="assets/css/mediumish.css" rel="stylesheet">
+
+<style> 
+        table { 
+            margin: auto;
+
+       } 
+
+small {
+color : black;
+}
+
+a {
+color : #4498d9;
+
+}
+
+    </style> 
+
+
+
+</head>
+<body>
+
+<!-- Begin Nav
+================================================== -->
+<nav class="navbar navbar-toggleable-md navbar-light bg-white fixed-top mediumnavigation">
+<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+<span class="navbar-toggler-icon"></span>
+</button>
+<div class="container">
+	<!-- Begin Logo -->
+	<a class="navbar-brand" href="index.html">
+	<img src="assets/img/logo.png" alt="logo">
+	</a>
+	<!-- End Logo -->
+	<div class="collapse navbar-collapse" id="navbarsExampleDefault">
+		<!-- Begin Menu -->
+		<ul class="navbar-nav ml-auto">
+			<li class="nav-item active">
+			<a class="nav-link" href="index.html">Home<span class="sr-only">(current)</span></a>
+			</li>
+			<li class="nav-item">
+			<a class="nav-link" href="threats.html">Threats</a>
+			</li>
+                        <li class="nav-item">
+			<a class="nav-link" href="reports.html">Reports</a>
+			</li>
+                        <li class="nav-item">
+			<a class="nav-link" href="presentations.html">Presentations</a>
+			</li>
+                        <li class="nav-item">
+			<a class="nav-link" href="https://yaraify.abuse.ch/user/45347/" target="_blank">Yara Rules</a>
+			</li>
+			<li class="nav-item">
+			<a class="nav-link" href="about.html">About</a>
+			</li>
+		</ul>
+		<!-- End Menu -->
+		
+	</div>
+</div>
+</nav>
+<!-- End Nav
+================================================== -->
+
+<!-- Begin Article
+================================================== -->
+<div class="container">
+	<div class="row">
+
+		<!-- Begin Fixed Left Share -->
+		<div class="col-md-2 col-xs-12">
+			<div class="share">
+			
+			</div>
+		</div>
+		<!-- End Fixed Left Share -->
+
+		<!-- Begin Post -->
+		<div class="col-md-8 col-md-offset-2 col-xs-12">
+			<div class="mainheading">
+
+				<!-- Begin Top Meta -->
+				<div class="row post-top-meta">
+					<div class="col-md-2">
+						<a href="about.html"><img class="author-thumb-2" src="images/me.jpg"></a>
+					</div>
+					<div class="col-md-10">
+						<a class="link-dark" href="about.html">jfarnan</a> &nbsp<span class="dot"></span>
+						
+						<span class="post-date">Nov 30, 2021</span>&nbsp<span class="dot"></span>&nbsp<span class="post-read">2 min read</span>
+					</div>
+				</div>
+				<!-- End Top Menta -->
+
+				<h1 class="posttitle">Reverse a C++ basic downloader</h1>
+
+			</div>
+
+			<div class="article-post">
+			<p>
+			This is a demonstration how  to reverse engineer a basic downloader back into a C code format. This downloader technique is how malware can download a file from a remote server and storing it on the local system.
+				</p>	
+
+
+			<p>	
+			The assembly we are going to look at is from a malicious binary which was originally written in C++. We begin looking at this malicious executable in IDA PRO at the main method.
+			</p>
+			
+			</div>
+
+
+
+			<!-- Image -->
+			<img class="featured-image img-fluid" src="downloader/main.jpg" alt="">
+			
+
+			<!-- Begin Post Content -->
+			<div class="article-post">
+				<b>
+					Object Created
+				</b>
+				<p>
+				This code begins with a call to new operator, telling us a new object is being created. A reference to the object is returned into EAX and passed into a variable which we will call object. This object is passed into ECX indicating that it will be passed as the this pointer in a function call. 
+				</p>
+				
+				<b>
+					URL Address
+				</b>
+				
+				<p>
+					A pointer the a URL address is stored at the beginning of the object which is passed to the function call I called download_file. As this is a demonstration the URL address points to an internal address on my local webserver http://www.localhost/malicious-site.com which holds a binary called “malicious.exe” which is the file that be downloaded.
+				</p>
+
+
+
+				<b>
+					Downloaded_file
+				</b>
+
+				<p>
+					This is a small function using the URLDownloadFileA API which will download a file from a remote URL. Looking at the assemble of this function we see arguments been placed on the stack for the call to URLDownloadFileA. 
+				</p>
+						<!-- Image -->
+						<img class="featured-image img-fluid" src="downloader/downloadFile.jpg" alt="">
+				<p>
+					One of these arguments is the location on the local system “C:\\Temp\\malicious.exe” telling us this file once downloaded will be placed in the Temp folder and the file will be called malicious.exe.
+				</p>
+
+				<b>
+					The object Argument
+				</b>
+
+				<p>
+					If we remember the argument called object which is a pointer to the URL and file http://www.localhost/malicious-site.com//malicious.exe  is now placed into EAX. The first data element stored in the object is accessed and placed in ECX and than pushed onto the stack.
+				</p>
+
+				<b>
+					URLDownloadFileA
+				</b>
+				
+				<p>
+					URLDownloadFileA has access to the server location and the location on the local system where the file is to be moved to, after executing we have now downloaded a malicious file onto the local system from the remote servers address.
+				</p>
+				
+				<p>
+					We exit this function and return to the main method where the program finishes.
+				</p>
+				
+				
+
+<table border="0"> 
+  
+         <tr> 
+         <td><b> Reversed Code </b><br>I have reversed this code into a basic C program making it more understandable. See Code Here. </td> 
+         <td><img src= "code/pdf_image.jpg"  width="80"  height="100"> <a href="code/downloader_code.pdf"  target="_blank" style="margin:15px;">Read</a>  </td> 
+         </tr> 
+	</table> 
+
+<!-- End Table -->
+
+<br><br>
+			</div>
+			<!-- End Post Content -->
+
+
+
+
+		</div>
+		<!-- End Post -->
+
+	</div>
+</div>
+<!-- End Article
+================================================== -->
+
+<div class="hideshare"></div>
+
+<!-- Begin Related
+================================================== -->
+<div class="graybg">
+	<div class="container"><h4>Recent Posts</h4><br>
+		<div class="row listrecent listrelated">
+
+			<!-- begin post -->
+			<div class="col-md-4">
+				<div class="card">
+					<a href="caddywiper.html">
+					<img class="img-fluid img-thumb" src="assets/img/cover/wiper.jpg" alt="">
+					</a>
+					<div class="card-block">
+						<h2 class="card-title"><a href="caddywiper.html">CaddyWiper Malware Analysis and how it damages systems</a></h2>
+						
+					</div>
+				</div>
+			</div>
+			<!-- end post -->
+
+			<!-- begin post -->
+			<div class="col-md-4">
+				<div class="card">
+					<a href="hexrays.html">
+					<img class="img-fluid img-thumb" src="assets/img/cover/hexrays.jpg" alt="">
+					</a>
+					<div class="card-block">
+						<h2 class="card-title"><a href="hexrays.html">Introduction to the Hex-Rays decompiler</a></h2>
+						
+					</div>
+				</div>
+			</div>
+			<!-- end post -->
+
+			<!-- begin post -->
+			<div class="col-md-4">
+				<div class="card">
+					<a href="debugging.html">
+					<img class="img-fluid img-thumb" src="assets/img/cover/debugging.jpg" alt="">
+					</a>
+					<div class="card-block">
+						<h2 class="card-title"><a href=debugging.html">Debugging C++ Classes using the x64dbg Debugger</a></h2>
+						
+					</div>
+				</div>
+			</div>
+			<!-- end post -->
+
+		</div>
+	</div>
+</div>
+<!-- End Related Posts
+================================================== -->
+
+
+
+<!-- Begin Footer
+================================================== -->
+<div class="container">
+	<div class="footer">
+		<p class="pull-left">
+			 Copyright &copy; 2024 H3hive
+		</p>
+	
+		<div class="clearfix">
+		</div>
+	</div>
+</div>
+<!-- End Footer
+================================================== -->
+
+
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="assets/js/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/ie10-viewport-bug-workaround.js"></script>
+<script src="assets/js/mediumish.js"></script>
+</body>
+</html>

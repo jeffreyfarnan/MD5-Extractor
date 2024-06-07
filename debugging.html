@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="icon" href="assets/img/favicon.ico">
+<title>H3hive</title>
+<!-- Bootstrap core CSS -->
+<link href="assets/css/bootstrap.min.css" rel="stylesheet">
+<!-- Fonts -->
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Righteous%7CMerriweather:300,300i,400,400i,700,700i" rel="stylesheet">
+<!-- Custom styles for this template -->
+<link href="assets/css/mediumish.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- Begin Nav
+================================================== -->
+<nav class="navbar navbar-toggleable-md navbar-light bg-white fixed-top mediumnavigation">
+<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+<span class="navbar-toggler-icon"></span>
+</button>
+<div class="container">
+	<!-- Begin Logo -->
+	<a class="navbar-brand" href="index.html">
+	<img src="assets/img/logo.png" alt="logo">
+	</a>
+	<!-- End Logo -->
+	<div class="collapse navbar-collapse" id="navbarsExampleDefault">
+		<!-- Begin Menu -->
+		<ul class="navbar-nav ml-auto">
+			<li class="nav-item active">
+			<a class="nav-link" href="index.html">Home<span class="sr-only">(current)</span></a>
+			</li>
+			<li class="nav-item">
+			<a class="nav-link" href="threats.html">Threats</a>
+			</li>
+                        <li class="nav-item">
+			<a class="nav-link" href="reports.html">Reports</a>
+			</li>
+                        <li class="nav-item">
+			<a class="nav-link" href="presentations.html">Presentations</a>
+			</li>
+                        <li class="nav-item">
+			<a class="nav-link" href="https://yaraify.abuse.ch/user/45347/" target="_blank">Yara Rules</a>
+			</li>
+			<li class="nav-item">
+			<a class="nav-link" href="about.html">About</a>
+			</li>
+		</ul>
+		<!-- End Menu -->
+		
+	</div>
+</div>
+</nav>
+<!-- End Nav
+================================================== -->
+
+<!-- Begin Article
+================================================== -->
+<div class="container">
+	<div class="row">
+
+		<!-- Begin Fixed Left Share -->
+		<div class="col-md-2 col-xs-12">
+			<div class="share">
+				
+			</div>
+		</div>
+		<!-- End Fixed Left Share -->
+
+		<!-- Begin Post -->
+		<div class="col-md-8 col-md-offset-2 col-xs-12">
+			<div class="mainheading">
+
+				<!-- Begin Top Meta -->
+				<div class="row post-top-meta">
+					<div class="col-md-2">
+						<a href="about.html"><img class="author-thumb-2" src="images/me.jpg"></a>
+					</div>
+					<div class="col-md-10">
+						<a class="link-dark" href="about.html">jfarnan</a> &nbsp<span class="dot"></span>
+						
+						<span class="post-date">Jul 16, 2021</span>&nbsp<span class="dot"></span>&nbsp<span class="post-read">2 min read</span>
+					</div>
+				</div>
+				<!-- End Top Menta -->
+
+				<h1 class="posttitle">Debugging C++ Classes using the x64dbg Debugger</h1>
+
+			</div>
+
+			<div class="article-post">
+			<p>
+			The objective of this blog post is to learn debugging while also understanding C++ classes and objects using the x64dbg Debugger. The executable we will be debugging is a fairly simple C++ program displaying two strings to the console.
+				</p>	
+
+
+				<b>
+				The main method
+				</b>
+
+				<p>
+				I load the program into x64dbg and find the main method. I go through the code labelling the functions allowing for better understanding of what is going on
+				</p>
+	
+			</div>
+
+
+
+			<!-- Image -->
+			<img class="featured-image img-fluid" src="debugging/main.jpg" alt="">
+		
+
+			<!-- Begin Post Content -->
+			<div class="article-post">
+				<p>
+					Setting a breakpoint on the main method and running the program, we can now proceed to go through the program step by step.
+				</p>
+
+			<!-- Image -->
+			<img class="featured-image img-fluid" src="debugging/breakpoint.jpg" alt="">
+
+				<p>
+					As we enter the main method we can see a new operator is used to allocate memory on the heap, in this case its four bytes. The simpleCat constructor is than called.
+				</p>
+					
+					<!-- Image -->
+					<img class="featured-image img-fluid" src="debugging/constructor.jpg" alt="">		
+
+				<b>
+				The simpleCat constructor
+				</b>
+				<p>
+					We can look at the constructor more closely here, when we enter it.
+				</p>
+			
+					<!-- Image -->
+					<img class="featured-image img-fluid" src="debugging/constructor2.jpg" alt="">	
+
+
+
+				<p>
+					In the simpleCat constructor we can see the address of the object (in ecx) is placed into a local variable in this case is [ebp-4]. The value of [ebp-4] (address) placed into eax. The int value of 2 is placed into the address that eax holds. We exit that function and now enter the main method again.
+				</p>
+
+					<!-- Image -->
+					<img class="featured-image img-fluid" src="debugging/main_return.jpg" alt="">	
+
+
+				<p>
+				The object is returned in ebx, the object itself is a hexadecimal address but at that address hold’s the value of 2. The object address is passed down to the next function which is simpleCat::getAge().
+				</p>
+
+				<b>
+				The simpleCat::gettAge() function
+				</b>
+					<!-- Image -->
+					<img class="featured-image img-fluid" src="debugging/getAge.jpg" alt="">	
+				<p>
+				This function again places the object address into [ebp-4] on the stack. The address again is place into eax. Then the contents of [eax] which is 2 is placed into eax. We than exit this function back into the main method.
+				</p>
+
+				<b>
+				Display functions
+				</b>
+				
+				<p>
+				Analysing the code I can see a lot of print statements and output to the console. I label these statements and run through the code.
+				</p>
+					<!-- Image -->
+					<img class="featured-image img-fluid" src="debugging/output_functions.jpg" alt="">
+				<p>
+				Looking at the code we have a load of print statements, ending with an end line statement. The next assembly instructions are setting up for the next function, the function is going to set the age now to five. Two arguments are being passéd to the function the object and the age, we now enter simpleCat::setAge()
+				</p>
+					<!-- Image -->
+					<img class="featured-image img-fluid" src="debugging/setAge.jpg" alt="">		
+				<b>
+				The simpleCat::setAge() function
+				</b>
+				
+				<p>
+				When we enter this function, the object address is in ecx, is moved into a variable [ebp-4]. The next instruction is to move this address into eax. The age of five is now moved from [ebp+8] into edx. 
+				</p>
+
+					<!-- Image -->
+					<img class="featured-image img-fluid" src="debugging/setAge2.jpg" alt="">
+				<p>
+				When we exit the function, Eax is returned with the value of 5. We return to the main code, where we encounter the getAge function again which will simply return the age of five into eax. We enter the print functions again and it will simply print out “Frisky is 5 years old”. We hit the endline function to end the print out statements.
+				</p>
+					<!-- Image -->
+					<img class="featured-image img-fluid" src="debugging/getAge2.jpg" alt="">
+				<p>
+				The last set of assembly instructions we enter will destroy the object, free up memory space, pause the program and exit out of main.
+				</p>
+					<!-- Image -->
+					<img class="featured-image img-fluid" src="debugging/codeEnd.jpg" alt="">
+				<p>
+				Looking at the output we see the following strings printed out.
+				</p>
+				<!-- Image -->
+					<img class="featured-image img-fluid" src="debugging/output.jpg" alt="">
+			
+			</div>
+			<!-- End Post Content -->
+
+
+
+		</div>
+		<!-- End Post -->
+
+	</div>
+</div>
+<!-- End Article
+================================================== -->
+
+<div class="hideshare"></div>
+
+<!-- Begin Related
+================================================== -->
+<div class="graybg">
+	<div class="container"><h4>Recent Posts</h4><br>
+		<div class="row listrecent listrelated">
+
+			<!-- begin post -->
+			<div class="col-md-4">
+				<div class="card">
+					<a href="orbit.html">
+					<img class="img-fluid img-thumb" src="assets/img/cover/orbit.jpg" alt="">
+					</a>
+					<div class="card-block">
+						<h2 class="card-title"><a href="orbit.html">Look at OrBit Malware affecting Linux machiner</a></h2>
+						
+					</div>
+				</div>
+			</div>
+			<!-- end post -->
+
+			<!-- begin post -->
+			<div class="col-md-4">
+				<div class="card">
+					<a href="alerts.html">
+					<img class="img-fluid img-thumb" src="assets/img/cover/alert.jpg" alt="">
+					</a>
+					<div class="card-block">
+						<h2 class="card-title"><a href="alerts.html">Reversing a Fake Alert with Ghidra</a></h2>
+						
+					</div>
+				</div>
+			</div>
+			<!-- end post -->
+
+			<!-- begin post -->
+			<div class="col-md-4">
+				<div class="card">
+					<a href="overflow.html">
+					<img class="img-fluid img-thumb" src="assets/img/cover/overflow.jpg" alt="">
+					</a>
+					<div class="card-block">
+						<h2 class="card-title"><a href="overflow.html">Analysis of how a Buffer Overflow is created</a></h2>
+						
+					</div>
+				</div>
+			</div>
+			<!-- end post -->
+
+		</div>
+	</div>
+</div>
+<!-- End Related Posts
+================================================== -->
+
+
+
+<!-- Begin Footer
+================================================== -->
+<div class="container">
+	<div class="footer">
+		<p class="pull-left">
+			 Copyright &copy; 2024 H3hive
+		</p>
+	
+		<div class="clearfix">
+		</div>
+	</div>
+</div>
+<!-- End Footer
+================================================== -->
+
+
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="assets/js/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/ie10-viewport-bug-workaround.js"></script>
+<script src="assets/js/mediumish.js"></script>
+</body>
+</html>
